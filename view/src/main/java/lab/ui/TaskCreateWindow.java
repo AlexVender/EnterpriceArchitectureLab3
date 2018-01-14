@@ -3,6 +3,9 @@ package lab.ui;
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Page;
+import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.*;
 import lab.dao.ProjectsDAOImpl;
 import lab.dao.TasksDAOImpl;
@@ -16,6 +19,7 @@ import lab.entities.ProjectEntity;
 import lab.entities.TaskEntity;
 import lab.entities.UserEntity;
 import lab.utils.EnumItemCaptionGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -39,13 +43,17 @@ public class TaskCreateWindow extends Window {
     private final DateField taskDueDate = new DateField("Due Date");
     private final Button btnCreate = new Button("Create");
     
-    private TasksDAO tasksDAO = new TasksDAOImpl();
-    private UsersDAO usersDAO = new UsersDAOImpl();
-    private ProjectsDAO projectsDAO = new ProjectsDAOImpl();
+    private TasksDAO tasksDAO;
+    private UsersDAO usersDAO;
+    private ProjectsDAO projectsDAO;
     
     private Binder<TaskEntity> binder = new Binder<>();
         
-    public TaskCreateWindow() {
+    public TaskCreateWindow(TasksDAO tasksDAO, UsersDAO usersDAO, ProjectsDAO projectsDAO) {
+        this.tasksDAO = tasksDAO;
+        this.usersDAO = usersDAO;
+        this.projectsDAO = projectsDAO;
+        
         setCaption("Create New Task");
         setWidth(CREATE_TASK_WINDOW_WIDTH, Unit.PIXELS);
         setResizable(false);

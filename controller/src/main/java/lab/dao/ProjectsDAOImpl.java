@@ -3,6 +3,8 @@ package lab.dao;
 import lab.dao.exceptions.DAOException;
 import lab.dao.interfaces.ProjectsDAO;
 import lab.entities.ProjectEntity;
+import lab.utils.HibernateSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +12,12 @@ import java.util.List;
 
 @Service
 public class ProjectsDAOImpl extends AbstractDAO implements ProjectsDAO {
+    
+    @Autowired
+    public ProjectsDAOImpl(HibernateSessionFactory hibernateSessionFactory) {
+        super(hibernateSessionFactory);
+    }
+    
     @Override
     public Integer create(ProjectEntity project) throws DAOException {
         return super.create(project);

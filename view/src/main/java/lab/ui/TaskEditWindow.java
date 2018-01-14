@@ -41,13 +41,17 @@ public class TaskEditWindow extends Window {
     private final DateField taskDueDate = new DateField("Due Date");
     private final Button btnUpdate = new Button("Update");
     
-    private TasksDAO tasksDAO = new TasksDAOImpl();
-    private UsersDAO usersDAO = new UsersDAOImpl();
-    private ProjectsDAO projectsDAO = new ProjectsDAOImpl();
+    private TasksDAO tasksDAO;
+    private UsersDAO usersDAO;
+    private ProjectsDAO projectsDAO;
     
     private Binder<TaskEntity> binder = new Binder<>();
     
-    public TaskEditWindow(TaskEntity taskEntity) {
+    public TaskEditWindow(TaskEntity taskEntity, TasksDAO tasksDAO, UsersDAO usersDAO, ProjectsDAO projectsDAO) {
+        this.tasksDAO = tasksDAO;
+        this.usersDAO = usersDAO;
+        this.projectsDAO = projectsDAO;
+        
         setCaption("Editing");
         setWidth(CREATE_TASK_WINDOW_WIDTH, Unit.PIXELS);
         setResizable(false);

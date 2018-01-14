@@ -3,12 +3,20 @@ package lab.dao;
 import lab.dao.exceptions.DAOException;
 import lab.dao.interfaces.TasksDAO;
 import lab.entities.TaskEntity;
+import lab.utils.HibernateSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TasksDAOImpl extends AbstractDAO implements TasksDAO {
+    
+    @Autowired
+    public TasksDAOImpl(HibernateSessionFactory hibernateSessionFactory) {
+        super(hibernateSessionFactory);
+    }
+    
     @Override
     public Integer create(TaskEntity task) throws DAOException {
         return super.create(task);

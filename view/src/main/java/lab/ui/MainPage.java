@@ -145,7 +145,7 @@ public class MainPage extends UI {
         tasksGrid.addItemClickListener(event -> {
             if (event.getMouseEventDetails().isDoubleClick()) {
                 TaskEntity task = event.getItem();
-                TaskEditWindow taskEditWindow = new TaskEditWindow(task);
+                TaskEditWindow taskEditWindow = new TaskEditWindow(task, tasksDAO, usersDAO, projectsDAO);
                 taskEditWindow.addCloseListener(e -> refreshTasks());
                 getUI().getUI().addWindow(taskEditWindow);
             }
@@ -169,7 +169,7 @@ public class MainPage extends UI {
         filterProject.setItems(projectsDAO.readAll(0, 0));
         
         btnNew.addClickListener(event -> {
-            TaskCreateWindow taskCreateWindow = new TaskCreateWindow();
+            TaskCreateWindow taskCreateWindow = new TaskCreateWindow(tasksDAO, usersDAO, projectsDAO);
             taskCreateWindow.addCloseListener(e -> refreshTasks());
             getUI().getUI().addWindow(taskCreateWindow);
         });

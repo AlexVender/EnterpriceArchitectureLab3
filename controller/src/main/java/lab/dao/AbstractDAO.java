@@ -7,7 +7,6 @@ import lab.utils.HibernateSessionFactory;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,8 +16,11 @@ import java.util.List;
 public abstract class AbstractDAO {
     private final static Logger logger = Logger.getLogger(AbstractDAO.class);
 
-    @Autowired
     HibernateSessionFactory hibernateSessionFactory;
+    
+    protected AbstractDAO(HibernateSessionFactory hibernateSessionFactory) {
+        this.hibernateSessionFactory = hibernateSessionFactory;
+    }
     
     protected Integer create(EntityItem entity) throws DAOException {
         try (Session session = hibernateSessionFactory.getSessionFactory().openSession()) {
