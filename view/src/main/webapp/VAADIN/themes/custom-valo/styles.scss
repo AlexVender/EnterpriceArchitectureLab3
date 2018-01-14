@@ -1,0 +1,6 @@
+@import "variables";
+@import "../valo/valo";
+
+.custom-valo {
+   @include valo;
+}
