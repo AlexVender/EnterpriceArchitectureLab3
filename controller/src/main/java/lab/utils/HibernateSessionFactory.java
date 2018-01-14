@@ -4,13 +4,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.stereotype.Service;
 
 
+@Service
 public class HibernateSessionFactory {
     
-    private static SessionFactory sessionFactory = buildSessionFactory();
+    private SessionFactory sessionFactory = buildSessionFactory();
     
-    protected static SessionFactory buildSessionFactory() {
+    protected SessionFactory buildSessionFactory() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
@@ -27,11 +29,11 @@ public class HibernateSessionFactory {
     }
     
     
-    public static SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
     
-    public static void shutdown() {
+    public void shutdown() {
         getSessionFactory().close();
     }
     

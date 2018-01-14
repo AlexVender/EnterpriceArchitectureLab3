@@ -13,14 +13,20 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 
+@Service
 public class TasksFilter {
     private final static Logger logger = Logger.getLogger(AbstractDAO.class);
-
+    
+    @Autowired
+    HibernateSessionFactory hibernateSessionFactory;
+    
     private String name;
     private Priority priority;
     private Status status;
@@ -76,7 +82,7 @@ public class TasksFilter {
 
 
     public List<TaskEntity> find() throws DAOException {
-        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+        try (Session session = hibernateSessionFactory.getSessionFactory().openSession()) {
 
             Class resultType = TaskEntity.class;
             Criteria cr = session.createCriteria(resultType);

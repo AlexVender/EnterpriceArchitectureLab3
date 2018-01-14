@@ -3,10 +3,11 @@ package lab.dao;
 import lab.dao.exceptions.DAOException;
 import lab.dao.interfaces.TasksDAO;
 import lab.entities.TaskEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class TasksDAOImpl extends AbstractDAO implements TasksDAO {
     @Override
     public Integer create(TaskEntity task) throws DAOException {

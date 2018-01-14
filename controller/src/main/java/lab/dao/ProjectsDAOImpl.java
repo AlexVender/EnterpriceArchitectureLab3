@@ -3,10 +3,12 @@ package lab.dao;
 import lab.dao.exceptions.DAOException;
 import lab.dao.interfaces.ProjectsDAO;
 import lab.entities.ProjectEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
+@Service
 public class ProjectsDAOImpl extends AbstractDAO implements ProjectsDAO {
     @Override
     public Integer create(ProjectEntity project) throws DAOException {

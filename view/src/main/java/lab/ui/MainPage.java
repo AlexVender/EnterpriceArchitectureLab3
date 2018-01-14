@@ -5,12 +5,11 @@ import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.spring.annotation.EnableVaadin;
+import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.spring.server.SpringVaadinServlet;
 import com.vaadin.ui.*;
-import lab.dao.ProjectsDAOImpl;
-import lab.dao.TasksDAOImpl;
-import lab.dao.UsersDAOImpl;
 import lab.dao.interfaces.ProjectsDAO;
 import lab.dao.interfaces.TasksDAO;
 import lab.dao.interfaces.UsersDAO;
@@ -23,7 +22,11 @@ import lab.filters.TasksFilter;
 import lab.utils.EnumItemCaptionGenerator;
 import lab.utils.EnumRenderer;
 import lab.utils.LocalDateRenderer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.ContextLoaderListener;
 
+import javax.servlet.annotation.WebListener;
 import javax.servlet.annotation.WebServlet;
 import java.util.Arrays;
 import java.util.Set;
@@ -31,6 +34,7 @@ import java.util.Set;
 
 @Title("Tasks Manager")
 @Theme("custom-valo")
+@SpringUI
 public class MainPage extends UI {
     public static final float WIDTH = 980;
     public static final float PRIORITY_COLUMN_WIDTH = 70;
@@ -63,13 +67,27 @@ public class MainPage extends UI {
     private final ComboBox<UserEntity> filterAssignee = new ComboBox<>("Assignee");
     private final ComboBox<ProjectEntity> filterProject = new ComboBox<>("Project");
     
-    private TasksDAO tasksDAO = new TasksDAOImpl();
-    private UsersDAO usersDAO = new UsersDAOImpl();
-    private ProjectsDAO projectsDAO = new ProjectsDAOImpl();
+    @Autowired
+    private TasksDAO tasksDAO;
+    @Autowired
+    private UsersDAO usersDAO;
+    @Autowired
+    private ProjectsDAO projectsDAO;
     
-    private TasksFilter filter = new TasksFilter();
+    @Autowired
+    private TasksFilter filter;
     
     private Set<TaskEntity> selectedItems;
+    
+    
+    @WebListener
+    public static class MyContextLoaderListener extends ContextLoaderListener {
+    }
+    
+    @Configuration
+    @EnableVaadin
+    public static class MyConfiguration {
+    }
     
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -206,6 +224,6 @@ public class MainPage extends UI {
     
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MainPage.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
+    public static class MyUIServlet extends SpringVaadinServlet {
     }
 }

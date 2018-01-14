@@ -3,10 +3,12 @@ package lab.dao;
 import lab.dao.exceptions.DAOException;
 import lab.dao.interfaces.UsersDAO;
 import lab.entities.UserEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
+@Service
 public class UsersDAOImpl extends AbstractDAO implements UsersDAO {
     @Override
     public Integer create(UserEntity user) throws DAOException {
