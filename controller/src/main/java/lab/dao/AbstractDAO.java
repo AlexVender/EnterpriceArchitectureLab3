@@ -52,8 +52,8 @@ public abstract class AbstractDAO {
             cq.select(cq.from(resultType));
 
             TypedQuery<T> typedQuery = session.createQuery(cq);
-            typedQuery.setFirstResult(limit);
-            typedQuery.setMaxResults(offset);
+            typedQuery.setFirstResult(offset);
+            typedQuery.setMaxResults(limit);
 
             return typedQuery.getResultList();
         } catch (HibernateException e) {
